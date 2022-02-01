@@ -151,6 +151,51 @@ Thus, character arrays such as `animal` that are used to store strings should be
 
 When you have finished updating this program and tested that it compiles, links and executes correctly, stage this updated file (using `git add`), commit your changes (using `git commit`), and push them (using `git push`) to GitHub.
 
+## Task 2: Exploring the Indexes and Addresses of Arrays
+
+**Step 13**: Comment out the declarations and statements involving the character array `animal`. Then add declarations of three arrays of type `IntegerArray` in the following order:
+
+`first` initialized to all `0`'s
+
+`arr` initialized to all `1`'s
+
+`last` initialized to all `2`'s
+
+Then add output statements to display the _address_ of `first`, `arr`, and `last`.
+
+Recall:
+
+- You can get the address of a variable using the address-of operator (`&`)
+- On some systems it may be necessary to make the addresses typeless by casting them to `void*` as in the expression `static_cast<void*>(&first)`
+
+Test that code works by compiling, linking and executing your new code. Once you have your program executing, record the results in Questions 9-11 found in [questions.txt](questions.txt).
+
+After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
+
+**Step 14**: Now use the variables `first`, `arr`, and `last` instead of `&first`, `&arr`, and `&last` in your output statements in Step 13. Test that code works by compiling, linking and executing your new code. Once you have your program executing, answer Question 12 found in [questions.txt](questions.txt).
+
+After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
+
+**Step 15**: Next, add statements that display `&arr[0]`, `&arr[1]`, ..., `&arr[15]` and `&arr + 0`, `&arr + 1`, ..., `&arr + 15`. Test that code works by compiling, linking and executing your new code. Once you have your program executing, answer Questions 13 found in [questions.txt](questions.txt).
+
+After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
+
+**Step 16**: Now, add statements to display the values of `arr[0]`, `arr[1]`, ..., `arr[15]` and also the values at `*arr`, `*(arr + 1)`, ..., `*(arr + 15)` -- use a `for`-based loop. Test that code works by compiling, linking and executing your new code. Once you have your program executing, answer Questions 14 found in [questions.txt](questions.txt).
+
+Now explore what happens when you remove the parentheses in the expressions `*(arr + i)`. Test that code works by compiling, linking and executing your new code. Once you have your program executing, give an explanation in Question 15 found in [questions.txt](questions.txt).
+
+After answering these questions in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
+
+This last experiment shows that the _base-address_ + _offset_ notation `*(arr + i)` is equivalent to the array reference notation `arr[i]`. The array reference notation is generally preferred, since it is clearer and easier to understand. However, the _base-address_ + _offset_ notation reveals what is actually going on.
+
+**Step 17**: Add statements to `array.cpp` so that the program lists all the elements of `first`, then all the elements of `arr`, and then all the elements of `last`. Compile, link and execute your changes to see that it operates properly. Your output for this step should look like this:
+
+```text
+first = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+arr   = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
+last  = { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 }
+```
+
 ## Submission Details
 
 Before submitting your assignment, be sure you have pushed all your changes to GitHub. If this is the first time you're pushing your changes, the push command will look like:

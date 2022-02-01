@@ -1,22 +1,60 @@
 1. What happens when you try to compile a statement with too many values in the initializer list?
 
 
+
 2. Describe what happened after you changed the primes initializer list to contain fewer than 16 values.
 
 
-3. 
+
+3. Describe what happened after you executed your program with the changes stated in Step 7 below.
 
 
-4. 
+
+4. Describe what happened after you executed your program with the changes stated in Step 8 below.
 
 
-5.
+
+5. Describe what happened after you executed your program with the changes stated in Step 9 below.
 
 
-6.
+
+6. Based upon your work through Step 10, describe what value is used to initialize the uninitialized array elements.
 
 
-7.
+
+7. Record what happened after you executed your program with the changes stated in Step 11 below.
 
 
-8.
+
+8. Describe what happened after you executed your program with the changes stated in Step 12 below.
+
+
+
+9. List the result addresses below:
+
+   Address of first:
+   Address of  arr:
+   Address of last:
+
+10. How many bytes of memory were allocated to each array?
+
+
+
+11. Using the information you have developed, complete these statements with the appropriate address:
+
+    Address of arr[2]:
+    Address of arr[3]:
+
+12. Describe how your output changed in Step 14 (if it didn't, say that). What can you conclude about the value of an array variable?
+
+
+
+13. Based on the output produced in Step 15, what can you conclude?
+
+
+
+14. Based on the output produced in Step 16, what can you conclude?
+
+
+
+15. In Step 16, what happens if you remove the parentheses in the expression *(arr + i)? Give an explanation below why you think this happens. (Hint: Check the priorites of operators * and +.)
