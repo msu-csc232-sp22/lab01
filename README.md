@@ -245,7 +245,7 @@ mat = | 55  66  77  88 |
 having 3 rows and 4 columns can be declared and initialized by
 
 ```c++
-int mat[3][4] = {{11, 22, 33, 44}, {55, 66, 77, 88}, {-1, -2, -3, -4}};
+int mat[3][4] = { {11, 22, 33, 44}, {55, 66, 77, 88}, {-1, -2, -3, -4} };
 ```
 
 The declaration doesn't have to be all on one line. It is often clearer if we write it more or less the way it looks:
