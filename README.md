@@ -230,6 +230,74 @@ After answering Questions 16-17 in [questions](questions.txt), save your changes
 
 >_Note that in the preceding code with illegal indices, if the array elements that were changed had contained critical information, they would have been corrupted. If they had contained program instructions, the program could crash. Clever people can sometimes exploit these kinds of features to introduce viruses and other kinds of malevolent code into programs._
 
+## Task 4: A Brief Look at Multidimensional Arrays
+
+Arrays can be multidimensional with two or more indices. A two-dimensional array of integers like
+
+```text
+      ┌                ┐
+      | 11  22  33  44 | 
+mat = | 55  66  77  88 |
+      | -1  -2  -3  -4 |
+      └                ┘
+```
+
+having 3 rows and 4 columns can be declared and initialized by 
+
+```c++
+int mat[3][4] = {{11, 22, 33, 44}, {55, 66, 77, 88}, {-1, -2, -3, -4}};
+```
+
+The declaration doesn't have to be all on one line. It is often clearer if we write it more or less the way it looks:
+
+```c++
+int mat[3][4] = { {11, 22, 33, 44},
+                  {55, 66, 77, 88},
+                  {-1, -2, -3, -4} };
+```
+
+In order to access the elements of an array either for assignment or for output, each array element has to be accessed separately. This is commonly done with a nest `for`-loop. Remember that C++ indexes start at 0; so we could use a `for`-loop like the following to output the elements in 5-space zones:
+
+```c++
+for (int i{0}; i < 3; ++i)
+{
+    for (int j{0}; j < 3; ++j)
+    {
+        cout << std::setw(5) << mat[i][j];
+    }
+    cout << std::endl;
+}
+```
+
+>_Note_: You will have to include the stream manipulator library `<iomanip>` to use the `setw()` manipulator, which sets the width for the next element to be output. You'll know you forgot to include this library if you get an error message like:
+
+```text
+error: ‘setw’ is not a member of ‘std’
+```
+
+The output of the above code would be:
+
+```text
+   11   22   33
+   55   66   77
+   -1   -2   -3
+```
+
+Before proceeding, comment any and all code changes made up until this point.
+
+**Step 19**: Add the above declarations and output statements (don't forget to `#include <iomanip>`) to your program. Make sure it compiles, links, and executes correctly. When you have finished updating this program and tested that it compiles, links and executes correctly, stage the updated file (using `git add`), commit your changes (using `git commit`), and push them (using `git push`) to GitHub.
+
+**Step 20**: Now we want to examine how a two-dimensional matrix like `mat` is stored in memory. Write statements to your code to allow you to determine the values of the following expressions:
+
+|Expression         |Value|Expression         |Value|Expression         |Value|
+|------------------:|:----|------------------:|:----|------------------:|:----|
+|       `*(mat + 0)`|     |       `*(mat + 1)`|     |       `*(mat + 2)`|     |
+|      `**(mat + 0)`|     |      `**(mat + 1)`|     |      `**(mat + 2)`|     |
+|      `*(*mat + 0)`|     |      `*(*mat + 1)`|     |      `*(*mat + 2)`|     |
+|`*(*(mat + 1) + 0)`|     |`*(*(mat + 1) + 1)`|     |`*(*(mat + 1) + 2)`|     |
+
+Test that code works by compiling, linking and executing your new code. Once you have your program executing, answer Questions 17-18 found in [questions.txt](questions.txt).
+
 ## Submission Details
 
 Before submitting your assignment, be sure you have pushed all your changes to GitHub. If this is the first time you're pushing your changes, the push command will look like:
