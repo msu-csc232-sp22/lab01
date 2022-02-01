@@ -242,7 +242,7 @@ mat = | 55  66  77  88 |
       └                ┘
 ```
 
-having 3 rows and 4 columns can be declared and initialized by 
+having 3 rows and 4 columns can be declared and initialized by
 
 ```c++
 int mat[3][4] = {{11, 22, 33, 44}, {55, 66, 77, 88}, {-1, -2, -3, -4}};
