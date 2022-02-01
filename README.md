@@ -94,7 +94,7 @@ type-name array-name = {list-of-values};
 
 When you have completed this step, stage your changes (using `git add`), commit your changes (using `git commit`), and push them (using `git push`) to GitHub.
 
-**Step 4**: Check that the array has been initialized properly by writing a `for` loop to display the elements of `prime`. When you have finished updating this program and tested that it compiles, links and executes correctly, stage this updated file (using `git add`), commit your changes (using `git commit`), and push them (using `git push`) to GitHub.
+**Step 4**: Check that the array has been initialized properly by writing a `for`-loop to display the elements of `prime`. When you have finished updating this program and tested that it compiles, links and executes correctly, stage this updated file (using `git add`), commit your changes (using `git commit`), and push them (using `git push`) to GitHub.
 
 **Step 5**: An initializer list with too many values is an error. Some compilers detect this as an error while others do not. THose that do not may allow the program to actually compile and run, and this will resulr in errors. Now you are to test your particular compiler to determine its behavior.
 
@@ -106,11 +106,11 @@ After answering the question in [questions](questions.txt), save your changes, s
 
 After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
 
-**Step 7**: Now you will repeat the experiment performed on the `IntegerArray` using `CharArray`. First comment out the declaration of the integer array `prime` and the `for` loop that displays the elements.
+**Step 7**: Now you will repeat the experiment performed on the `IntegerArray` using `CharArray`. First comment out the declaration of the integer array `prime` and the `for`-loop that displays the elements.
 
 > Note that the phrase _commenting out_ refers to the process of using the comment syntax to temporarily eliminate some program lines for test purposes, or sometimes to provide for alternative implementations. This can be done by putting a single-line comment delimiter `//` at the beginning of each line you want to eliminate. When several lines are involved, you can use the `/* ... */` comment delimiters.
 
-Once you have commented out the integer array `prime` and the `for` loop, then declare the `CharArray` variable `animal` initializing it to `'r'`, `'h'`, `'i'`, `'n'`, `'o'`, `'c'`, `'e'`, `'r'`, `'o'`, `'s'`. Check that the array has been initialized properly by adding a `for` loop that displays the elements of `animal` followed by something like `****`, all on the same line. After you have completed this, compile, link, and execute the code. Describe what happens in [questions.txt](questions.txt) (see question 3).
+Once you have commented out the integer array `prime` and the `for`-loop, then declare the `CharArray` variable `animal` initializing it to `'r'`, `'h'`, `'i'`, `'n'`, `'o'`, `'c'`, `'e'`, `'r'`, `'o'`, `'s'`. Check that the array has been initialized properly by adding a `for`-loop that displays the elements of `animal` followed by something like `****`, all on the same line. After you have completed this, compile, link, and execute the code. Describe what happens in [questions.txt](questions.txt) (see question 3).
 
 After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
 
@@ -122,11 +122,11 @@ After answering the question in [questions](questions.txt), save your changes, s
 
 After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
 
-**Step 10**: It may not be completely clear what happened when the uninitialized character array locations were reached. What did the output operator do when the `for` loop sent it the character array elements that had not been initialized? To see this, modify the output statement in the `for` loop to display the actual ASCII codes being generated for each character array element. (_Hint_: Use a type cast `static_cast<int>(animal[i])` to convert `char` values into `int` values. You may also want insert a single space character into the stream after each such cast to see the ASCII values of each character more clearly.) Answer question 6 in [questions.txt](questions.txt) to describe what is used to initialize the uninitialized array elements.
+**Step 10**: It may not be completely clear what happened when the uninitialized character array locations were reached. What did the output operator do when the `for`-loop sent it the character array elements that had not been initialized? To see this, modify the output statement in the `for`-loop to display the actual ASCII codes being generated for each character array element. (_Hint_: Use a type cast `static_cast<int>(animal[i])` to convert `char` values into `int` values. You may also want insert a single space character into the stream after each such cast to see the ASCII values of each character more clearly.) Answer question 6 in [questions.txt](questions.txt) to describe what is used to initialize the uninitialized array elements.
 
 After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
 
-**Step 11**: Now try initializing the character array in a different way. Character arrays can also be initialized by using string literals like `"elephant"` -- so we can initialize the character array `animal` using the string literal in place of the curly brace initializer list syntax. We can also output a character array using `<<` directly, as in 
+**Step 11**: Now try initializing the character array in a different way. Character arrays can also be initialized by using string literals like `"elephant"` -- so we can initialize the character array `animal` using the string literal in place of the curly brace initializer list syntax. We can also output a character array using `<<` directly, as in
 
 ```c++
 std::cout << animal << "****\n";
@@ -145,7 +145,11 @@ You may have gotten a warning message, even though the array has been declared t
 Thus, character arrays such as `animal` that are used to store strings should be declared large enough to store at least one extra character at the end of each string value, namely, the null character. This character is used by functions that process strings stored in character arrays to mark the end of the string. To see how this is done:
 
 (i) Change the initialization string of `animal` to `"zebra"`.
-(ii) Now write C++ statements
+(ii) Now write C++ statements in `main()` that could be used to determine the length of the string stored in `animal`, that is, the number of non-null characters. Test that code works by compiling, linking and executing your new code. _Note_: For fun(?) -- see if you can do this using a `for`-loop with an empty body. 
+
+> _Remember_: The end-of-string mark (i.e., the null character `'\0'`) gets placed at the end of each initialization string or a string that is input for a character array (e.g., `cin >> animal;`) provided that the character array has space for it. If it doesn't get stored, one cannot expect string operations to work correctly. Thus, one must be sure the array is large enough so that it has space for this null character.
+
+When you have finished updating this program and tested that it compiles, links and executes correctly, stage this updated file (using `git add`), commit your changes (using `git commit`), and push them (using `git push`) to GitHub.
 
 ## Submission Details
 
