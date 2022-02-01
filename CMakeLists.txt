@@ -1,7 +1,7 @@
 ﻿# CMakeList.txt : CMake project for CMakeProject1, include source and define
 # project specific logic here.
 #
-cmake_minimum_required (VERSION 3.22.0)
+cmake_minimum_required (VERSION 3.16.3-3.22.1)
 project(Lab01)
 
 set(SRC_MAIN_FILES
