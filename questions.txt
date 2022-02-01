@@ -1,0 +1,22 @@
+1. What happens when you try to compile a statement with too many values in the initializer list?
+
+
+2. Describe what happened after you changed the primes initializer list to contain fewer than 16 values.
+
+
+3. 
+
+
+4. 
+
+
+5.
+
+
+6.
+
+
+7.
+
+
+8.

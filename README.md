@@ -1,459 +1,151 @@
-# LAB0B - Tools of the Trade (Development Tools)
+# LAB01 - Arrays and Addresses
 
-_This is another **non-graded** lab whose sole purpose is to familiarize the student with a number of development tools that shall be employed, implicitly or explicitly, throughout the semester, to build and execute targets based on C++ source code._
+_Note: The contents of this README is taken directly (with slight modifications) from Lab Manual to Accompany ADTs, Data Structures, and Problem Solving with C++, Second Edition by Larry Nyhoff, Lab 3.1 Arrays and Addresses, pp 37-44, (c) 2006 Pearson Education, Inc. ISBN: 0-13-148758-2._
 
-## Background
+**Background**: The C++ programming language is based on the C programming language and provides all the features of C. While some of these features have been superseded by modern counterparts that are more consistent with object-oriented programming, some with which C++ programmers need to be familiar are commonly overlooked in introductory courses. This is especially true of C-style arrays. The _array_ is an important data structure because it provides an efficient storage structure for implementing many ADTs.
 
-For further reading related to this lab, the student should visit
+**Objective**: This lab exercise provides a review of C-style arrays. It explores one-dimensional arrays, how they are declared and processed. Multidimensional arrays are considered briefly at the end of the exercise and in HW01. Additional information about arrays can be found in Appendix A (Section A.6 - Arrays).
 
+**Approach**: This lab exercise proceeds in four tasks:
 
-* [MSVC Compiler Command-Line Syntax](https://docs.microsoft.com/en-us/cpp/build/reference/compiler-command-line-syntax?view=msvc-170)
-* [MSVC Compiler Options (by Category)](https://docs.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category?view=msvc-170)
-* [MSVC Linker Reference](https://docs.microsoft.com/en-us/cpp/build/reference/linking?view=msvc-170)
-* [MSVC Linker Options](https://docs.microsoft.com/en-us/cpp/build/reference/linker-options?view=msvc-170)
-* [NMake Reference](https://docs.microsoft.com/en-us/cpp/build/reference/nmake-reference?view=msvc-170)
-* [CMake](https://cmake.org/cmake/help/latest/index.html)
+1. Explore one-dimensional arrays
+2. Explore the indices and addresses of arrays
+3. Explore what happens when arrays are indexed improperly
+4. Look briefly at multidimensional arrays
 
-## Objectives
-
-* Continue using `git` to
-  * clone repositories
-  * create `develop` branches within in which to do your work
-  * commit changes to your source code (updates, file creation and/or deletion)
-  * publish your `develop` branch to GitHub
-* Learn to build executables (targets) using
-  * C++ source files using Visual Studio command line development tools (e.g., `CL`)
-  * build systems like `make`
-  * Learn to build executables (targets) using "meta" build systems like `cmake`
-
-## Assumptions
-
-The following applications are assumed to be installed and configured on your system:
-
-* Visual Studio (configured to build C++ applications)
-  - Developer Powershell for VS 2022
-* CMake
-* Git
-* GitHub CLI
+You'll be doing experiments on arrays, their addresses and behaviors. In some places you will intentionally introduce errors to see how the system responds.
 
 ## Getting Started
 
-After accepting this assignment with the provided [GitHub Classroom Assignment link](https://classroom.github.com/a/B2LWXZrT), clone this repository. If you have cloned the repository from the command line prompt, navigate into the newly created directory
+After accepting this assignment with the provided [GitHub Classroom Assignment link](https://classroom.github.com/a/zmWY7E0R), clone this repository. If you have cloned the repository from the command line prompt, navigate into the newly created directory
 
 ```bash
-cd labn-github-username
+cd lab01-github-username
 ```
 
-Next, create a branch named `develop`. Please note: The name of this branch **must** be as specified and will be, to the grading scripts, case-sensitive.
+Next, create a branch named develop. Please note: The name of this branch must be as specified and will be, to the grading scripts, case-sensitive.
 
 ```bash
 git checkout -b develop
 ```
 
-Make sure you are on the `develop` branch before you get started. Make all your commits on the `develop` branch.
+Make sure you are on the develop branch before you get started. Make all your commits on the develop branch.
 
 ```bash
-git status
+git branch
 ```
 
-_You may have to type the `q` character to get back to the command line prompt after viewing the status._
+_You may have to type the q character to get back to the command line prompt after viewing the branches listed with this command_.
 
-## Tasks
+## Task 1: Exploring One-Dimensional Arrays
 
-This lab consists of three tasks, i.e., use
+**Step 1**: Begin by creating a new source file in the `src` directory named `array.cpp` that contains the following _stub_.
 
-1. the Visual Studio command line development tools to build targets from C++ source files and dependencies.
-1. `nmake` to dictate the build process.
-1. `cmake` to dictate the build process.
+```c++
+#include <cstdlib>
 
-### Task 1: Compiling C++ Source Code with `CL`
-
-* Organizing our code
-* Compiling (things the compiler needs to know)
-* Specifying where to look for local include files
-* Specifyng a target name
-
-Below is an example of using `Powershell`, as instantiated by the `Visual Studio 2022 > Developer Powershell for VS 2022`. Note, the directory path for you instance will differ accordingly. Basically, `C:\Path\To\Your\lab0b` is the directory in which you cloned `lab0b` (this lab). Be sure to change into that directory's `src` folder after opening the `Developer Powershell for VS 2022` before attempting the following commands.
-
-```Powershell
-PS C:\Path\To\Your\lab0b\src> CL /EHsc /I ..\include .\main.cpp
-Microsoft (R) C/C++ Optimizing Compiler Version 19.30.30709 for x86
-Copyright (C) Microsoft Corporation.  All rights reserved.
-
-main.cpp
-Microsoft (R) Incremental Linker Version 14.30.30709.0
-Copyright (C) Microsoft Corporation.  All rights reserved.
-
-/out:main.exe
-main.obj
-PS C:\Path\To\Your\lab0b\src>
+int main()
+{
+    return EXIT_SUCCESS;
+}
 ```
 
-Several things just happened here. You source code was compiled, creating an object file for the code your wrote in C++. This object code makes references to other libraries (e.g., `iostream`). These external libraries are used to create additional object files. Finally, to build an executable program, a program known as a "Linker" is used to "link" all these object files into a single executable file for the target operating system. You can see these new files (`main.obj` and `main.exe`, the object file and executable, respectively, for our "main" target. The use of the phrase "main target" is meant to reference this `main.exe` executable).
+A stub is a complete program fragment that will compile properly but won't necessarily do anything. You could try to compile, link, and execute the stub. If you do, you will discover that nothing happens. It compiles and links, but it doesn't do anything. Not a big surprise, right?
 
-By the way, the reason we specify the `/EHsc` switch for `CL` is because of this warning, which you may get if you do not specify `/EHsc` as it so indicates.
+To compile and link this program, execute the following commands (that assume you are at a terminal Window of a Linux WSL distribution, or a Macintosh computer, that has the GNU build tools installed and that you're in the `src` directory in which you created the file `array.cpp` mentioned above). Note that the `$` character is the command line prompt and is not to be typed.
 
-```Powershell
-C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.30.30705\include\ostream(743): warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+```bash
+$ g++ array.cpp -o lab01
+$ ./lab01
+$
 ```
 
-Use the `ls` command to see these new files:
+When you have finished writing this program and tested that it compiles, links and executes correctly, stage this new file (using `git add`), commit your changes (using `git commit`), and push them (using `git push`) to GitHub. Assuming you're still in the `src` directory, type the following commands:
 
-```Powershell
-PS C:\Path\To\Your\lab0b\src> ls
-
-
-    Directory: C:\Path\To\Your\lab0b\src
-
-
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
--a----         1/24/2022   8:39 PM           1168 demo.cpp
--a----         1/24/2022   8:39 PM           1168 main.cpp
--a----         1/24/2022   9:11 PM         194048 main.exe
--a----         1/24/2022   9:11 PM         138258 main.obj
+```bash
+$ git add array.cpp
+$ git commit -m"Initial import of array program stub."
+... output specific to your environment ...
+$ git push -u origin develop
+... output specific to your environment ...
+$
 ```
 
-Now that you have successfully built a target (an executable), let's execute this new target:
+NOTE: Since this _should_ be the first time you're pushing changes on this `develop` branch, you need to add the `-u origin develop` arguments to the `git push` command. After this first push, you don't add those arguments and simply type `git push` when instructed to push your changes to GitHub.
 
-```Powershell
-PS C:\Path\To\Your\lab0b\src> .\main.exe
-Hello, Lab0a Main Target!
-Could not open "main_data.txt"
+**Step 2**: Now add two `typedef` statements of the form
+
+```text
+typedef array-element-type custom-type-name[array-size];
 ```
 
-We see that the program apparently failed to open some file named `main_data.txt`. In fact, it was expecting this file to exist as the same directory as the executable itself. Looking at the output of the `ls` command above, we see that's true. No such file currently exists in this folder. The files do exist, however, in another location, i.e., in the `resource` folder of this project. Let's copy those files here, take a quick peek to see they now exists and try to run the program again.
+ahead of `main()` to define the two data types:
 
-```Powershell
-PS C:\Path\To\Your\lab0b\src> cp ..\resource\main_data.txt .
-PS C:\Path\To\Your\lab0b\src> cp ..\resource\demo_data.txt .
-PS C:\Path\To\Your\lab0b\src> ls
+1. `IntegerArray` for arrays with 16 integer elements
+2. `CharArray` for arrays with 10 character elements
 
+When you have completed this step, stage your changes (using `git add`), commit your changes (using `git commit`), and push them (using `git push`) to GitHub.
 
-    Directory: C:\Path\To\Your\lab0b\src
+**Step 3**: Inside the `main()` function, declare and initialize an `IntegerArray` variable `prime` to be an array contain the 16 integers 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, using a declaration of the form:
 
-
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
--a----         1/24/2022   8:39 PM           1168 demo.cpp
--a----         1/24/2022   8:39 PM              0 demo_data.txt
--a----         1/24/2022   8:39 PM           1168 main.cpp
--a----         1/24/2022   9:11 PM         194048 main.exe
--a----         1/24/2022   9:11 PM         138258 main.obj
--a----         1/24/2022   8:39 PM              0 main_data.txt
-
-
-PS C:\Path\To\Your\lab0b\src> .\main.exe
-Hello, Lab01a Main Target!
-Successfully opened "main_data.txt"... will now close this file
-PS C:\Path\To\Your\lab0b\src>
+```text
+type-name array-name = {list-of-values};
 ```
 
-One last thing that we should cover has to do with naming a specific target. What if you don't want the program that's built using `main.cpp` (and it's dependencies) to be named `main.exe`? Is there a way to specify a different name? Yes, there is. What about the object files? Yes, that too.
+When you have completed this step, stage your changes (using `git add`), commit your changes (using `git commit`), and push them (using `git push`) to GitHub.
 
-Follow along.
+**Step 4**: Check that the array has been initialized properly by writing a `for` loop to display the elements of `prime`. When you have finished updating this program and tested that it compiles, links and executes correctly, stage this updated file (using `git add`), commit your changes (using `git commit`), and push them (using `git push`) to GitHub.
 
-```Powershell
-PS C:\Path\To\Your\lab0b\src> CL /EHsc /I ..\include .\main.cpp /link /out:lab0b.exe
-Microsoft (R) C/C++ Optimizing Compiler Version 19.30.30709 for x86
-Copyright (C) Microsoft Corporation.  All rights reserved.
+**Step 5**: An initializer list with too many values is an error. Some compilers detect this as an error while others do not. THose that do not may allow the program to actually compile and run, and this will resulr in errors. Now you are to test your particular compiler to determine its behavior.
 
-main.cpp
-Microsoft (R) Incremental Linker Version 14.30.30709.0
-Copyright (C) Microsoft Corporation.  All rights reserved.
+What happens when you try to compile a statement with too many values in the initializer list? You can find out by adding one or more values to your initializer list for `prime`. Do this and note what happens in [questions.txt](questions.txt) (see question 1).
 
-/out:main.exe
-/out:lab0b.exe
-main.obj
-PS C:\Path\To\Your\lab0b\src> ls
+After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
 
+**Step 6**: It is not an error to give too few values in the initializer list of an array. What happens in this case? You can find out by changing the initialization of `prime` to use fewer than 16 integers and outputing the array elements. Describe what happens when you do this in [questions.txt](questions.txt) (see question 2).
 
-    Directory: C:\Path\To\Your\lab0b\src
+After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
 
+**Step 7**: Now you will repeat the experiment performed on the `IntegerArray` using `CharArray`. First comment out the declaration of the integer array `prime` and the `for` loop that displays the elements.
 
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
--a----         1/24/2022   9:54 PM           1168 demo.cpp
--a----         1/24/2022   8:39 PM              0 demo_data.txt
--a----         1/24/2022  10:13 PM         199168 lab0b.exe
--a----         1/24/2022   9:54 PM           1168 main.cpp
--a----         1/24/2022  10:13 PM         167286 main.obj
--a----         1/24/2022   8:39 PM              0 main_data.txt
--a----         1/24/2022   8:39 PM              0 test_data.txt
+> Note that the phrase _commenting out_ refers to the process of using the comment syntax to temporarily eliminate some program lines for test purposes, or sometimes to provide for alternative implementations. This can be done by putting a single-line comment delimiter `//` at the beginning of each line you want to eliminate. When several lines are involved, you can use the `/* ... */` comment delimiters.
 
+Once you have commented out the integer array `prime` and the `for` loop, then declare the `CharArray` variable `animal` initializing it to `'r'`, `'h'`, `'i'`, `'n'`, `'o'`, `'c'`, `'e'`, `'r'`, `'o'`, `'s'`. Check that the array has been initialized properly by adding a `for` loop that displays the elements of `animal` followed by something like `****`, all on the same line. After you have completed this, compile, link, and execute the code. Describe what happens in [questions.txt](questions.txt) (see question 3).
 
-PS C:\Path\To\Your\lab0b\src>
+After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
+
+**Step 8**: Now check if adding one or more characters, i.e., adding too many initialization values, affects what happens. If so, add one or more characters and repeat the test. Describe what happens in [questions.txt](questions.txt) (see question 4).
+
+After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
+
+**Step 9**: Now check what happens when there are fewer values in the initializer list. Remove all but the first five characters in the initializer list and compile, link, and execute your program again. Describe what happens in [questions.txt](questions.txt) (see question 5).
+
+After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
+
+**Step 10**: It may not be completely clear what happened when the uninitialized character array locations were reached. What did the output operator do when the `for` loop sent it the character array elements that had not been initialized? To see this, modify the output statement in the `for` loop to display the actual ASCII codes being generated for each character array element. (_Hint_: Use a type cast `static_cast<int>(animal[i])` to convert `char` values into `int` values. You may also want insert a single space character into the stream after each such cast to see the ASCII values of each character more clearly.) Answer question 6 in [questions.txt](questions.txt) to describe what is used to initialize the uninitialized array elements.
+
+After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
+
+**Step 11**: Now try initializing the character array in a different way. Character arrays can also be initialized by using string literals like `"elephant"` -- so we can initialize the character array `animal` using the string literal in place of the curly brace initializer list syntax. We can also output a character array using `<<` directly, as in 
+
+```c++
+std::cout << animal << "****\n";
 ```
 
-In the above, we see that we indeed created an executable named `lab0b.exe`, but the object file is still named `main.obj`. To change the name of the generated intermediate object file, we use the `/Fo` switch for `CL` as follows:
+Make necessary changes to use the string `"elephant"` and record what happens in [questions.txt](questions.txt) (see question 7).
 
-```Powershell
-PS C:\Path\To\Your\lab0b\src> CL /Fo.\lab0b.obj /EHsc /I ..\include .\main.cpp /link /out:lab0b.exe
-Microsoft (R) C/C++ Optimizing Compiler Version 19.30.30709 for x86
-Copyright (C) Microsoft Corporation.  All rights reserved.
+After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
 
-main.cpp
-Microsoft (R) Incremental Linker Version 14.30.30709.0
-Copyright (C) Microsoft Corporation.  All rights reserved.
+**Step 12**: Now repeat the test using the string `"rhinoceros"` instead. Describe what happens in [questions.txt](questions.txt) (see question 8).
 
-/out:lab0b.exe
-/out:lab0b.exe
-.\lab0b.obj
-PS C:\Path\To\Your\lab0b\src> ls
+After answering the question in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
 
+You may have gotten a warning message, even though the array has been declared to to have 10 elements. The reason is that character arrays are terminated by **null characters**, `\0`, whose ASCII code is 0, provided there is room to store this character. Since functions that process character arrays expect to to find this null character at the end of the string that is stored, they may not work properly when there is no such null-terminating character.
 
-    Directory: C:\Path\To\Your\lab0b\src
+Thus, character arrays such as `animal` that are used to store strings should be declared large enough to store at least one extra character at the end of each string value, namely, the null character. This character is used by functions that process strings stored in character arrays to mark the end of the string. To see how this is done:
 
-
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
--a----         1/24/2022   9:54 PM           1168 demo.cpp
--a----         1/24/2022   8:39 PM              0 demo_data.txt
--a----         1/24/2022  10:18 PM         199168 lab0b.exe
--a----         1/24/2022  10:18 PM         167290 lab0b.obj
--a----         1/24/2022   9:54 PM           1168 main.cpp
--a----         1/24/2022  10:13 PM         167286 main.obj
--a----         1/24/2022   8:39 PM              0 main_data.txt
--a----         1/24/2022   8:39 PM              0 test_data.txt
-
-
-```
-
-Ok, you have just been guided through the process of compiling, linking and executing a specified target. Now it's your turn:
-
-Use what you just learned to build and execute the following targets:
-
-1. `lab0b-demo.exe` built with the `demo.cpp` source file (which has similar dependencies as `main.cpp`)
-
-### Task 2 - Using `nmake` to build targets
-
-Recall what it takes to build an executable built by just a simple file source file and local header file:
-
-```Powershell
-PS C:\Path\To\Your\lab0b\src> CL /Fo.\lab0b.obj /EHsc /I ..\include .\main.cpp /link /out:lab0b.exe
-```
-
-All these command line switches are confusing, not easy to remember, and prone to user input error. It would be nice if we could capture this command, or the steps that lead to its final product, in a single file and issue one simple command to build some target. Guess what. There is.
-
-1. Create a new file named `Makefile` in the `C:\Path\To\Your\lab0b\src`:
-
-   ```Powershell
-   PS C:\Path\To\Your\lab0b\src> notepad .\Makefile
-   ```
-
-   This will launch the Notepad editor. 
-   
-1. Enter the following, using the tab character for indentation:
-
-   ```Makefile
-   lab0b.exe: lab0b.obj
-        LINK lab0b.obj
-   lab0b.obj: main.cpp
-        CL /Fo.\lab0b.obj /EHsc /I ..\include -c main.cpp
-   ```
-
-   when you are done, save your file and close Notepad. Because Notepad automatically adds the `txt` extension to files it creates, we need to rename `Makefile.txt` to `Makefile`. This is done with the `mv` command (move):
-
-   ```Powershell
-   PS C:\Path\To\Your\lab0b\src> mv Makefile.txt Makefile
-   ```
-
-1. Next run `nmake`:
-
-   ```Powershell
-   PS C:\Path\To\Your\lab0b\src> nmake
-
-   Microsoft (R) Program Maintenance Utility Version 14.30.30709.0
-   Copyright (C) Microsoft Corporation.  All rights reserved.
-
-            CL /Fo.\lab0b.obj /EHsc /I ..\include -c main.cpp
-   Microsoft (R) C/C++ Optimizing Compiler Version 19.30.30709 for x86
-   Copyright (C) Microsoft Corporation.  All rights reserved.
-
-   main.cpp
-            LINK lab0b.obj
-   Microsoft (R) Incremental Linker Version 14.30.30709.0
-   Copyright (C) Microsoft Corporation.  All rights reserved.
-
-   PS C:\Path\To\Your\lab0b\src> ls
-
-            Directory: C:\Path\To\Your\lab0b\src
-
-
-   Mode                 LastWriteTime         Length Name
-   ----                 -------------         ------ ----
-   -a----         1/24/2022   9:54 PM           1168 demo.cpp
-   -a----         1/24/2022   8:39 PM              0 demo_data.txt
-   -a----         1/24/2022  11:34 PM         199168 lab0b.exe
-   -a----         1/24/2022  11:34 PM         167290 lab0b.obj
-   -a----         1/24/2022   9:54 PM           1168 main.cpp
-   -a----         1/24/2022   8:39 PM              0 main_data.txt
-   -a----         1/24/2022  11:14 PM            114 Makefile
-   -a----         1/24/2022   8:39 PM              0 test_data.txt
-
-
-   PS C:\Path\To\Your\lab0b\src>
-   ```
-
-As you can see, our `lab0b` object files and targets were created. By creating this `Makefile`, we've reduced our effort to creating targets to issuing just a single command: `nmake`
-
-1. Modify the `Makefile` to prescribe the construction for the `lab0b-demo.exe` target like you did with `CL` in Part 1.
-1. Test your new target construction plan by running `nmake` on a particular target:
-
-   ```Powershell
-   PS C:\Path\To\Your\lab0b\src> nmake lab0b-demo.exe
-
-   Microsoft (R) Program Maintenance Utility Version 14.30.30709.0
-   Copyright (C) Microsoft Corporation.  All rights reserved.
-
-            CL /Fo.\lab0b-demo.obj /EHsc /I ..\include -c demo.cpp
-   Microsoft (R) C/C++ Optimizing Compiler Version 19.30.30709 for x86
-   Copyright (C) Microsoft Corporation.  All rights reserved.
-
-    demo.cpp
-            LINK lab0b-demo.obj
-   Microsoft (R) Incremental Linker Version 14.30.30709.0
-   Copyright (C) Microsoft Corporation.  All rights reserved.
-
-   PS C:\Path\To\Your\lab0b\src>
-   ```
-
-   If modified correctly, then the output above should be similar to your output.
-
-1. Finally, note that the first prescription planned in the `Makefile` is carried out now when `nmake` is run without specifying a target. That is, just run `nmake` by itself and note the target that's built.
-1. Stage your `Makefile` for commit by typing `git add Makefile`.
-1. Commit your new file by typing `git commit -m"Add Makefile."`
-1. Push your changes to GitHub. If this is the first time you're pushing (i.e., publishing) the `develop` branch, then type `git push -u origin develop`, otherwise, just type `git push`
-
-
-### Task 3 - Using cmake
-
-For this final task, let's do two things before using `cmake`
-
-1. Let's navigate to the "root" of our repository (i.e. up one directory): `cd ..` You should be in the `C:\Path\To\Your\lab0b` folder now.
-1. Let's delete a folder named `build` (if it exists): `del .\build` (Answer `A` to delete all files).
-1. Notice you have a file named `CMakeLists.txt` in this root folder. This is a file used by `cmake` in much the same way the `Makefile` was used by `nmake` in Task 2 that you just completed.
-
-We're going to conduct what's known as an "out of source" build using `cmake`. This simply means will put all the files needed to build our targets in a folder "outside" of the source folder(s) and outside of the location of the `CMakeLists.txt` file itself. As you'll soon see, `cmake` uses `nmake`, which is why we studied `nmake` in the previous task. For our purposes today, we need to give `cmake` three pieces of information:
-
-1. The location of the `CMakeLists.txt` used to guide its operation. This is done using the `-S` switch (think of "S" as standing for "source")
-1. The location of where to place the files it needs to build targets. This is done using the `-B` switch (think of "B" as standing for "build")
-1. The "generator" to use which identifies the types of files it creates and places in your specified build folder. This is done using the `-G` switch (think of "G" as standing for "generator").
-
-    ```Powershell
-    PS C:\Path\To\Your\lab0b> cmake -S . -B .\build -G "NMake Makefiles"
-    -- The C compiler identification is MSVC 19.30.30709.0
-    -- The CXX compiler identification is MSVC 19.30.30709.0
-    -- Detecting C compiler ABI info
-    -- Detecting C compiler ABI info - done
-    -- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.30.30705/bin/Hostx86/x86/cl.exe - skipped
-    -- Detecting C compile features
-    -- Detecting C compile features - done
-    -- Detecting CXX compiler ABI info
-    -- Detecting CXX compiler ABI info - done
-    -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.30.30705/bin/Hostx86/x86/cl.exe - skipped
-    -- Detecting CXX compile features
-    -- Detecting CXX compile features - done
-    -- Found Python: C:/Users/jdaehn/AppData/Local/Programs/Python/Python310/python.exe (found version "3.10.2") found components: Interpreter
-    -- Looking for pthread.h
-    -- Looking for pthread.h - not found
-    -- Found Threads: TRUE
-    -- Configuring done
-    -- Generating done
-    -- Build files have been written to: C:/Users/jdaehn/source/repos/lab0b/build
-    PS C:\Path\To\Your\lab0b> cd .\build\
-    PS C:\Path\To\Your\lab0b\build> ls
-
-
-        Directory: C:\Path\To\Your\lab0b\build
-
-
-    Mode                 LastWriteTime         Length Name
-    ----                 -------------         ------ ----
-    d-----         1/25/2022  12:02 AM                bin
-    d-----         1/25/2022  12:02 AM                CMakeFiles
-    d-----         1/25/2022  12:02 AM                lib
-    d-----         1/25/2022  12:02 AM                _deps
-    -a----         1/25/2022  12:02 AM          22271 CMakeCache.txt
-    -a----         1/25/2022  12:02 AM           1645 cmake_install.cmake
-    -a----         1/25/2022  12:02 AM            410 CTestTestfile.cmake
-    -a----         1/25/2022  12:02 AM            238 lab0b-tests[1]_include.cmake
-    -a----         1/25/2022  12:02 AM          12429 Makefile
-
-
-    C:\Path\To\Your\lab0b>
-    ```
-
-1. Notice the `build` folder (a) was created and (b) it contains a `Makefile` in it. Navigate into the `build` folder and run `nmake`:
-
-   ```Powershell
-   PS C:\Path\To\Your\lab0b\build> nmake
-   
-   Microsoft (R) Program Maintenance Utility Version 14.30.30709.0
-   Copyright (C) Microsoft Corporation.  All rights reserved.
-
-   [  5%] Building CXX object CMakeFiles/lab0b.dir/src/main.cpp.obj
-   main.cpp
-   [ 11%] Linking CXX executable lab0b.exe
-   [ 11%] Built target lab0b
-   [ 17%] Building CXX object CMakeFiles/lab0b-demo.dir/src/demo.cpp.obj
-   demo.cpp
-   [ 23%] Linking CXX executable lab0b-demo.exe
-   [ 23%] Built target lab0b-demo
-   [ 29%] Building CXX object _deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.obj
-   gtest-all.cc
-   [ 35%] Linking CXX static library ..\..\..\lib\gtestd.lib
-   [ 35%] Built target gtest
-   [ 41%] Building CXX object _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.obj
-   gtest_main.cc
-   [ 47%] Linking CXX static library ..\..\..\lib\gtest_maind.lib
-   [ 47%] Built target gtest_main
-   [ 52%] Building CXX object CMakeFiles/lab0b-tests.dir/test/test.cpp.obj
-   test.cpp
-   [ 58%] Linking CXX executable lab0b-tests.exe
-   [ 58%] Built target lab0b-tests
-   [ 64%] Building CXX object _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/__/googletest/src/gtest-all.cc.obj
-   gtest-all.cc
-   [ 70%] Building CXX object _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.obj
-   gmock-all.cc
-   [ 76%] Linking CXX static library ..\..\..\lib\gmockd.lib
-   [ 76%] Built target gmock
-   [ 82%] Building CXX object _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/__/googletest/src/gtest-all.cc.obj
-   gtest-all.cc
-   [ 88%] Building CXX object _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock-all.cc.obj
-   gmock-all.cc
-   [ 94%] Building CXX object _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.obj
-   gmock_main.cc
-   [100%] Linking CXX static library ..\..\..\lib\gmock_maind.lib
-   [100%] Built target gmock_main
-   PS C:\Path\To\Your\lab0b\build>
-   ```
-
-1. Notice that three targets were built by typing `ls *.exe`.
-1. Run each of the targets:
-   
-   ```Powershell
-   PS C:\Path\To\Your\lab0b\build>.\lab0b.exe
-   Hello, Lab0b Main Target!
-   Successfully opened "main_data.txt"... will now close this file
-   PS C:\Path\To\Your\lab0b\build>.\lab0b-demo.exe
-   Hello, Lab0b Demo Target!
-   Successfully opened "demo_data.txt"... will now close this file
-   PS C:\Path\To\Your\lab0b\build>.\lab0b-tests.exe
-   Running main() from C:\Users\jdaehn\source\repos\lab0b\build\_deps\googletest-src\googletest\src\gtest_main.cc
-   [==========] Running 1 test from 1 test suite.
-   [----------] Global test environment set-up.
-   [----------] 1 test from HelloTest
-   [ RUN      ] HelloTest.BasicAssertions
-   [       OK ] HelloTest.BasicAssertions (0 ms)
-   [----------] 1 test from HelloTest (1 ms total)
-
-   [----------] Global test environment tear-down
-   [==========] 1 test from 1 test suite ran. (7 ms total)
-   [  PASSED  ] 1 test.
-   ```
-
-   That last (test) target was a little more complex to build, but as we can see, `cmake` made it a breeze. This test target can be used (in general with labs and homework assignments going forward) to determine your progress on any given assignment. As you can also infer from its output, one test was executed and it passed.
+(i) Change the initialization string of `animal` to `"zebra"`.
+(ii) Now write C++ statements
 
 ## Submission Details
 
