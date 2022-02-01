@@ -196,6 +196,40 @@ arr   = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
 last  = { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 }
 ```
 
+## Task 3: Exploring What Happens When We Index Improperly
+
+When we declare an array, we give it a capacity, i.e., a number of elements. One would think that the compiler should complain when we write code that does not obey these declarations and not allow us to do it. But that isn't necessarily the case. We will now explore what does happen when array indices get out of range.
+
+**Step 18**: To find out, add the following statements _before_ the code you added in Step 17 to output the array elements:
+
+```c++
+arr[-10] = -999;
+arr[20] = 999;
+```
+
+Now compile, link, and execute the program again. _If you get an error_, try initializing two `int` variables `back` (to -10) and `forward` (to 20), and replace the indices -10 and 20 in the above statements with `back` and `forward`, respectively. _If you still get errors_, you may have to turn off an "index checking" compiler switch (something you'll have to research for your particular compiler). _At the time this lab was written, the author was using_ `g++` _version 9.3.0 running on an Ubuntu 20.04 distribution installed on WSL v2 without the need for any changes to the above code segment to get the desired results_. Once it comples and executes, describe what happened in Question 16 found in [questions.txt](questions.txt).
+
+Now add the following output statements and compile, link, and execute the program again.
+
+```c++
+cout << "\narr[-10]..arr[20] = { ";
+for (int i{-10}; i <= 20; ++i)
+{
+    cout << arr[i];
+    if (i < 20)
+    {
+        cout << ", ";
+    }
+}
+cout << " }\n";
+```
+
+Based  on this output, you should be able to explain why the elements of `first` and `last` got change "indirectly." Give your explanation in Question 17 found in [questions.txt](questions.txt).
+
+After answering Questions 16-17 in [questions](questions.txt), save your changes, stage your changes (using `git add`), commit your changes (using `git commit`), and push your changes to GitHub (using `git push`).
+
+>_Note that in the preceding code with illegal indices, if the array elements that were changed had contained critical information, they would have been corrupted. If they had contained program instructions, the program could crash. Clever people can sometimes exploit these kinds of features to introduce viruses and other kinds of malevolent code into programs._
+
 ## Submission Details
 
 Before submitting your assignment, be sure you have pushed all your changes to GitHub. If this is the first time you're pushing your changes, the push command will look like:

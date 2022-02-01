@@ -58,3 +58,7 @@
 
 
 15. In Step 16, what happens if you remove the parentheses in the expression *(arr + i)? Give an explanation below why you think this happens. (Hint: Check the priorites of operators * and +.)
+
+
+
+16. Describe what happened after you executed your program with the changes stated in Step 18 below. What array elements changed?
