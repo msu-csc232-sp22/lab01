@@ -1,8 +1,8 @@
 ﻿# CMakeList.txt : CMake project for CMakeProject1, include source and define
 # project specific logic here.
 #
-cmake_minimum_required (VERSION 3.22.1)
-project(Lab0b)
+cmake_minimum_required (VERSION 3.16.3-3.22.1)
+project(Lab01)
 
 set(SRC_MAIN_FILES
         src/main.cpp)
@@ -25,23 +25,23 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-add_executable(lab0b ${SRC_MAIN_FILES})
-add_executable(lab0b-demo ${SRC_DEMO_FILES})
-add_executable(lab0b-tests ${SRC_TEST_FILES})
+add_executable(Lab01 ${SRC_MAIN_FILES})
+add_executable(Lab01-demo ${SRC_DEMO_FILES})
+add_executable(Lab01-tests ${SRC_TEST_FILES})
 
 target_link_libraries(
-    lab0b-tests
+    Lab01-tests
     gtest_main
 )
 
-target_include_directories(lab0b PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include ${CMAKE_CURRENT_LIST_DIR}/src)
-target_include_directories(lab0b-demo PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include ${CMAKE_CURRENT_LIST_DIR}/src)
-target_include_directories(lab0b-tests PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include ${CMAKE_CURRENT_LIST_DIR}/src)
+target_include_directories(Lab01 PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include ${CMAKE_CURRENT_LIST_DIR}/src)
+target_include_directories(Lab01-demo PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include ${CMAKE_CURRENT_LIST_DIR}/src)
+target_include_directories(Lab01-tests PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include ${CMAKE_CURRENT_LIST_DIR}/src)
 
 include(GoogleTest)
-gtest_discover_tests(lab0b-tests)
+gtest_discover_tests(Lab01-tests)
 
 # add custom commands that copy data input files to target working directories
-add_custom_command(TARGET lab0b PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_LIST_DIR}/resource/main_data.txt ${CMAKE_CURRENT_BINARY_DIR})
-add_custom_command(TARGET lab0b-demo PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_LIST_DIR}/resource/demo_data.txt ${CMAKE_CURRENT_BINARY_DIR})
-add_custom_command(TARGET lab0b-tests PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_LIST_DIR}/resource/test_data.txt ${CMAKE_CURRENT_BINARY_DIR})
+add_custom_command(TARGET Lab01 PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_LIST_DIR}/resource/main_data.txt ${CMAKE_CURRENT_BINARY_DIR})
+add_custom_command(TARGET Lab01-demo PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_LIST_DIR}/resource/demo_data.txt ${CMAKE_CURRENT_BINARY_DIR})
+add_custom_command(TARGET Lab01-tests PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_LIST_DIR}/resource/test_data.txt ${CMAKE_CURRENT_BINARY_DIR})
