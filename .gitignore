@@ -365,3 +365,12 @@ FodyWeavers.xsd
 
 api/
 *.exe
+
+# Visual Studio Code configuration files
+.vscode/
+
+# Lab specific
+a.out
+a.exe
+lab*
+lab*.exe
