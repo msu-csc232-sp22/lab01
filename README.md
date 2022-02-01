@@ -300,31 +300,19 @@ Test that code works by compiling, linking and executing your new code. Once you
 
 ## Submission Details
 
-Before submitting your assignment, be sure you have pushed all your changes to GitHub. If this is the first time you're pushing your changes, the push command will look like:
-
-```Powershell
-git push -u origin develop
-```
-
-If you've already set up remote tracking (using the `-u origin develop` switch), then all you need to do is type
-
-```Powershell
-git push
-```
-
-As usual, prior to submitting your assignment on Blackboard, be sure that you have committed and pushed your final changes to GitHub. Once your final changes have been pushed, create a pull request that seeks to merge the changes in your `develop` branch into your `trunk` branch. Once your pull request has been created, submit the URL of your assignment _repository_ (i.e., _not_ the URL of the pull request) Blackboard using a **Text Submission**. Please note: the timestamp of the submission on Blackboard is used to assess any late penalties if and when warranted, _not_ the date/time you create your pull request. **No exceptions will be granted for this oversight**.
+As usual, prior to submitting your assignment on Blackboard, be sure that you have saved and staged all your changes, committed them, and pushed your final changes to GitHub. Once your final changes have been pushed, create a pull request that seeks to merge the changes in your `develop` branch into your `trunk` branch. Once your pull request has been created, submit the URL of your assignment _repository_ (i.e., _not_ the URL of the pull request) Blackboard using a **Text Submission**. Please note: the timestamp of the submission on Blackboard is used to assess any late penalties if and when warranted, _not_ the date/time you create your pull request. **No exceptions will be granted for this oversight**.
 
 ### Due Date
 
-Your assignment submission is due by 11:59 PM, Friday, 28-Jan 2022.
+Your assignment submission is due by 11:59 PM, Friday, 04-Feb 2022.
 
 ### Grading Rubric
 
 This assignment is worth **3 points**.
 
-Criteria          | Exceeds Expectations        | Meets Expectations             | Below Expectations | Failure                                                 |
-------------------|-----------------------------|--------------------------------|--------------------|---------------------------------------------------------|
-Pull Request (20%)| Submitted early, correct url| Submitted on-time; correct url | Incorrect URL            | No pull request was created or submitted          |
+Criteria          | Exceeds Expectations        | Meets Expectations                 | Below Expectations       | Failure                                       |
+------------------|-----------------------------|------------------------------------|--------------------------|-----------------------------------------------|
+Pull Request (20%)| Submitted early, correct url| Submitted on-time; correct url     | Incorrect URL            | No pull request was created or submitted      |
 Code Style (20%)  | Exemplary code style        | Consistent, modern coding style    | Inconsistent coding style| No style whatsoever or no code changes present|
 Correctness^ (60%)| All unit tests pass         | At least 80% of the unit tests pass| At least 60% of the unit tests pass| Less than 50% of the unit tests pass|
 
@@ -332,6 +320,6 @@ Correctness^ (60%)| All unit tests pass         | At least 80% of the unit tests
 
 ### Late Penalty
 
-* In the first 24 hour period following the due date, this lab will be penalized 0.6 point meaning the grading starts at 2.4 (out of 3 total possible) points.
-* In the second 24 hour period following the due date, this lab will be penalized 1.2 points meaning the grading starts at 1.8 (out of 3 total possible) points.
-* After 48 hours, the assignment will not be graded and thus earns no points, i.e., 0 out of 3 possible points.
+- In the first 24 hour period following the due date, this lab will be penalized 0.6 point meaning the grading starts at 2.4 (out of 3 total possible) points.
+- In the second 24 hour period following the due date, this lab will be penalized 1.2 points meaning the grading starts at 1.8 (out of 3 total possible) points.
+- After 48 hours, the assignment will not be graded and thus earns no points, i.e., 0 out of 3 possible points.
